@@ -12,7 +12,7 @@ RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
 
 ENV PATH="/root/.cargo/bin:${PATH}"
 
-FROM base as builder-base
+FROM base as crust
 
 RUN apt-get install -y  \
     cmake  \
@@ -23,6 +23,7 @@ RUN apt-get install -y  \
 
 
 RUN apt-get install -y  \
+    glib-source \
     libatk1.0.0  \
     libcairo2-dev  \
     libffi-dev  \
