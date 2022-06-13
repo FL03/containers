@@ -23,7 +23,6 @@ RUN apt-get install -y  \
 
 
 RUN apt-get install -y  \
-    glib-source \
     libatk1.0.0  \
     libcairo2-dev  \
     libffi-dev  \
@@ -35,5 +34,4 @@ RUN apt-get install -y  \
 RUN rustup toolchain install nightly
 RUN rustup target add wasm32-unknown-unknown --toolchain nightly
 RUN rustup toolchain install stable-gnu
-RUN rustup default stable
 RUN apt-get update -y

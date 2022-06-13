@@ -26,7 +26,7 @@ jobs:
         with:
           context: core/python/poetic
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/python/poetic:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/pypoetry:latest
   rust-latest:
     runs-on: ubuntu-latest
     steps:
@@ -67,7 +67,7 @@ jobs:
           context: core/rust/nightly
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/rusty:nightly
-  crust:
+  rusty-gnu:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -84,6 +84,6 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
-          context: core/rust/crust
+          context: core/rust/gnu
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/crust:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/rusty:gnu
