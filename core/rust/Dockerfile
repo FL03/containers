@@ -1,4 +1,4 @@
-FROM ubuntu as base
+FROM debian:buster-slim as environment
 
 RUN apt-get update -y
 
