@@ -27,7 +27,7 @@ jobs:
           context: core/python/poetic
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/pypoetry:latest
-  rust-latest:
+  rusty:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -47,7 +47,7 @@ jobs:
           context: core/rust
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/rusty:latest
-  rust-nightly:
+  rusty-nightly:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
