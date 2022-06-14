@@ -4,7 +4,13 @@ RUN apt-get update -y
 
 RUN apt-get install -y  \
     build-essential  \
-    curl
+    cmake \
+    curl \
+    nodejs \
+    pkg-config \
+    python3 \
+    npm \
+    yarn
 
 RUN apt-get update -y
 
