@@ -1,4 +1,4 @@
-FROM debian:buster-slim as builder-base
+FROM debian:buster-slim
 
 RUN apt-get update -y && apt-get upgrade -y
 
