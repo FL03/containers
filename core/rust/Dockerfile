@@ -1,16 +1,11 @@
-FROM debian:buster-slim as environment
+FROM debian:buster-slim as builder-base
 
 RUN apt-get update -y
 
 RUN apt-get install -y  \
     build-essential  \
     cmake \
-    curl \
-    nodejs \
-    pkg-config \
-    python3 \
-    npm \
-    yarn
+    curl
 
 RUN apt-get update -y
 
