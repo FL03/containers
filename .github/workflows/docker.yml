@@ -2,9 +2,18 @@ name: Docker
 
 on:
   push:
-    branches: [ "master" ]
+    branches:
+      - "master"
+      - "v*.*.*"
+    tags:
+      - "latest"
+      - "v*.*.*"
   pull_request:
-    branches: [ "master" ]
+    branches:
+      - "master"
+    tags:
+      - "latest"
+      - "v*.*.*"
 
 jobs:
   node:
@@ -18,7 +27,7 @@ jobs:
         id: prepare
         run: |
           DOCKER_IMAGE=${{ secrets.DOCKERHUB_USERNAME }}/node
-          DOCKER_PLATFORMS=linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/386,linux/ppc64le,linux/s390x
+          DOCKER_PLATFORMS=linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64
           VERSION=latest
 
           if [[ $GITHUB_REF == refs/tags/* ]]; then
@@ -75,7 +84,7 @@ jobs:
         id: prepare
         run: |
           DOCKER_IMAGE=${{ secrets.DOCKERHUB_USERNAME }}/pypoetry
-          DOCKER_PLATFORMS=linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/386,linux/ppc64le,linux/s390x
+          DOCKER_PLATFORMS=linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64
           VERSION=latest
 
           if [[ $GITHUB_REF == refs/tags/* ]]; then
@@ -96,7 +105,7 @@ jobs:
             --build-arg VERSION=${VERSION} \
             --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') \
             --build-arg VCS_REF=${GITHUB_SHA::8} \
-            ${TAGS} --file ./core/python/poetic/Dockerfile ./core/python/poetic
+            ${TAGS} --file ./core/python/pypoetry/Dockerfile ./core/python/pypoetry
       -
         name: Set up Docker Buildx
         uses: crazy-max/ghaction-docker-buildx@v3
@@ -132,14 +141,11 @@ jobs:
         id: prepare
         run: |
           DOCKER_IMAGE=${{ secrets.DOCKERHUB_USERNAME }}/rusty
-          DOCKER_PLATFORMS=linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/386,linux/ppc64le,linux/s390x
+          DOCKER_PLATFORMS=linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64
           VERSION=nightly
 
           if [[ $GITHUB_REF == refs/tags/* ]]; then
             VERSION=${GITHUB_REF#refs/tags/v}
-          fi
-          if [ "${{ github.event_name }}" = "schedule" ]; then
-            VERSION=nightly
           fi
 
           TAGS="--tag ${DOCKER_IMAGE}:${VERSION}"
@@ -189,14 +195,11 @@ jobs:
         id: prepare
         run: |
           DOCKER_IMAGE=${{ secrets.DOCKERHUB_USERNAME }}/rusty
-          DOCKER_PLATFORMS=linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/386,linux/ppc64le,linux/s390x
+          DOCKER_PLATFORMS=linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64
           VERSION=latest
 
           if [[ $GITHUB_REF == refs/tags/* ]]; then
             VERSION=${GITHUB_REF#refs/tags/v}
-          fi
-          if [ "${{ github.event_name }}" = "schedule" ]; then
-            VERSION=nightly
           fi
 
           TAGS="--tag ${DOCKER_IMAGE}:${VERSION}"
@@ -246,14 +249,11 @@ jobs:
         id: prepare
         run: |
           DOCKER_IMAGE=${{ secrets.DOCKERHUB_USERNAME }}/rusty
-          DOCKER_PLATFORMS=linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/386,linux/ppc64le,linux/s390x
+          DOCKER_PLATFORMS=linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64
           VERSION=latest
 
           if [[ $GITHUB_REF == refs/tags/* ]]; then
             VERSION=${GITHUB_REF#refs/tags/v}
-          fi
-          if [ "${{ github.event_name }}" = "schedule" ]; then
-            VERSION=nightly
           fi
 
           TAGS="--tag ${DOCKER_IMAGE}:${VERSION}"
