@@ -7,6 +7,7 @@ RUN apt-get install -y \
     build-essential  \
     cmake \
     curl \
+    libpcsclite1 \
     pkg-config
 
 RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
