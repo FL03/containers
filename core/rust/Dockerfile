@@ -1,7 +1,6 @@
 FROM photon as container-base
 
 RUN yum install -y \
-    apt-utils \
     build-essential  \
     cmake \
     pkg-config

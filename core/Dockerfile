@@ -4,4 +4,3 @@ RUN yum install -y \
     build-essential  \
     cmake \
     pkg-config
-
