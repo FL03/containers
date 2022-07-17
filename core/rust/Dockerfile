@@ -1,20 +1,18 @@
-FROM debian:buster-slim as builder-base
+FROM photon as container-base
 
-RUN apt-get update -y && apt-get upgrade -y
-
-RUN apt-get install -y \
+RUN yum install -y \
     apt-utils \
     build-essential  \
     cmake \
-    curl \
-    libpcsclite1 \
     pkg-config
+
+FROM container-base as environment-builder
 
 RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
 
 ENV PATH="/root/.cargo/bin:${PATH}"
 
-FROM builder-base as builder
+FROM environment-builder as builder
 
 RUN cargo install cargo-generate
 RUN rustup toolchain install nightly
