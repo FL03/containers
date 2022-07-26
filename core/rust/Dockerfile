@@ -3,7 +3,8 @@ FROM photon as container-base
 RUN yum install -y \
     build-essential  \
     cmake \
-    pkg-config
+    pkg-config \
+    unzip
 
 FROM container-base as environment-builder
 
