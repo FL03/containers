@@ -1,12 +1,4 @@
-FROM photon as container-base
-
-RUN yum install -y \
-    build-essential  \
-    cmake \
-    pkg-config \
-    unzip
-
-FROM container-base as environment-builder
+FROM jo3mccain/container as environment-builder
 
 RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
 
