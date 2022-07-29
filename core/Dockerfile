@@ -3,6 +3,9 @@ FROM photon as container-base
 RUN yum install -y \
     build-essential  \
     cmake \
-    pkg-config \
-    openssl-devel \
+    pkg-config
+
+RUN yum install -y \
+    fontconfig \
+    openssl-devel  \
     unzip
