@@ -1,13 +1,13 @@
 FROM python
 
 ENV ENV_MODE=dev \
-    PYTHONUNBUFFERER=1 \
+    PYTHONUNBUFFERED=1 \
     POETRY_VIRTUALENVS_CREATE=false
 
-RUN apt-get install -y pkg-config
+RUN apt-get install -y \
+    pkg-config
 
-RUN pip install --upgrade pip &&  \
-    pip install cookiecutter deta meson ninja
+RUN pip install --upgrade pip
 
 RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | POETRY_HOME=/opt/poetry python && \
     cd /usr/local/bin && \
