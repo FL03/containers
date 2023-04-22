@@ -1,5 +1,9 @@
 name: Docker
 
+concurrency:
+  group: "docker"
+  cancel-in-progress: false
+
 on:
   pull_request:
     branches-ignore: [ "beta*", "dev*", "next*" ]
@@ -25,7 +29,7 @@ jobs:
     - uses: actions/checkout@v3
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
-    - name: Publish to Registry
+    - name: Publish (rust-wasm)
       uses: elgohr/Publish-Docker-Github-Action@v5
       with:
         context: rust/wasm
@@ -35,11 +39,12 @@ jobs:
         platforms: linux/amd64,linux/arm64,linux/arm/v7
         snapshot: true
         username: ${{ secrets.DOCKERHUB_USERNAME }}
-    - name: Publish to Registry
+    - name: Publish (trunkrs)
       uses: elgohr/Publish-Docker-Github-Action@v5
       with:
+        buildoptions: "--target trunkrs"
         context: rust/wasm
-        dockerfile: rust/wasm/trunk.dockerfile
+        dockerfile: rust/wasm/dev.dockerfile
         name: ${{ secrets.DOCKERHUB_USERNAME }}/trunkrs
         password: ${{ secrets.DOCKERHUB_TOKEN }}
         platforms: linux/amd64,linux/arm64,linux/arm/v7
