@@ -21,9 +21,24 @@ on:
 env:
   REGISTRY: hub.docker.com
 
-
 jobs:
   rust:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+    - name: Publish (rust-wasm)
+      uses: elgohr/Publish-Docker-Github-Action@v5
+      with:
+        context: rust
+        dockerfile: rust/Dockerfile
+        name: ${{ secrets.DOCKERHUB_USERNAME }}/rust
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+        platforms: linux/amd64,linux/arm64,linux/arm/v7
+        snapshot: true
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+  rust-wasm:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -39,13 +54,22 @@ jobs:
         platforms: linux/amd64,linux/arm64,linux/arm/v7
         snapshot: true
         username: ${{ secrets.DOCKERHUB_USERNAME }}
-    - name: Publish (trunkrs)
+  wasm-dev:
+    strategy:
+      matrix:
+        target: [ "dioxus", "trunkrs" ]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+    - name: Publish (${{ matrix.target }})
       uses: elgohr/Publish-Docker-Github-Action@v5
       with:
-        buildoptions: "--target trunkrs"
+        buildoptions: "--target ${{ matrix.target }}"
         context: rust/wasm
         dockerfile: rust/wasm/dev.dockerfile
-        name: ${{ secrets.DOCKERHUB_USERNAME }}/trunkrs
+        name: ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.target }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
         platforms: linux/amd64,linux/arm64,linux/arm/v7
         snapshot: true
