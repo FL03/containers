@@ -7,7 +7,7 @@ RUN apt-get install -y \
 
 FROM base as nodejs
 
-ENV NODE_VERSION=16
+ENV NODE_VERSION=18
 
 RUN curl -sL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash -
 
